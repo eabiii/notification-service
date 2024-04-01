@@ -41,3 +41,4 @@ export class MailersendService {
     }
   }
 }
+export { EmailParams, Sender, Recipient, MailerSend };
