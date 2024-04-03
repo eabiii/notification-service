@@ -14,4 +14,12 @@ export class Config {
   static get mailerEmailDomain(): string {
     return process.env.MAILERSEND_SENDER_DOMAIN || '';
   }
+
+  static get mongodbUrl(): string {
+    return process.env.MONGO_URL || '';
+  }
+
+  static get mongodbName(): string {
+    return process.env.MONGO_DB_NAME || '';
+  }
 }
