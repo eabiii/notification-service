@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { Config } from 'src/config';
-// import { ClicksendMessages } from 'src/models/clicksend/clicksend.model';
 
 export interface ClicksendResult {
   httpCode: number;

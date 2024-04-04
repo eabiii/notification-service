@@ -11,11 +11,14 @@ import {
   EmailData,
   MailersendService,
 } from '../notification/email/mailersend/mailersend.service';
+import { OtpService } from './otp/otp.service';
+import { OtpDTO } from '../models/otp/otp.dto';
 @Controller('/api/v1/notification')
 export class NotificationController {
   constructor(
     private readonly clicksendService: ClicksendService,
     private readonly mailersendService: MailersendService,
+    private readonly otpService: OtpService,
   ) {}
 
   @Post('sendSMS')
@@ -66,6 +69,17 @@ export class NotificationController {
         'Failed to send SMS',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
+    }
+  }
+
+  @Post('sendOtp')
+  async sendOtp(@Body() body: OtpDTO, @Res() res): Promise<any> {
+    const result = await this.otpService.create(body);
+    if (result) {
+      return res.status(HttpStatus.CREATED).json({
+        statusCode: HttpStatus.CREATED,
+        message: `OTP sent successfully - ${result.otp}`,
+      });
     }
   }
 }
