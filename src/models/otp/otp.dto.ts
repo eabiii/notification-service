@@ -7,3 +7,12 @@ export class OtpDTO {
   @ApiProperty()
   channel: string;
 }
+
+export class OtpReturnDTO {
+  @ApiProperty()
+  userId: string;
+
+  @ApiProperty()
+  otp: string;
+}
+

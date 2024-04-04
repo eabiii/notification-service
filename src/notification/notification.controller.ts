@@ -78,7 +78,7 @@ export class NotificationController {
     if (result) {
       return res.status(HttpStatus.CREATED).json({
         statusCode: HttpStatus.CREATED,
-        message: 'OTP sent successfully',
+        message: `OTP sent successfully - ${result.otp}`,
       });
     }
   }

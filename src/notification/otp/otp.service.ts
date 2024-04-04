@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Otp } from '../../infrastructure/mongodb/schemas/otp.schema';
-import { OtpDTO } from '../../models/otp/otp.dto';
+import { OtpDTO, OtpReturnDTO } from '../../models/otp/otp.dto';
 
 import * as speakeasy from 'speakeasy';
 
@@ -12,7 +12,7 @@ export class OtpService {
 
   constructor(@InjectModel(Otp.name) private readonly otpModel: Model<Otp>) {}
 
-  async create(data: OtpDTO): Promise<Otp> {
+  async create(data: OtpDTO): Promise<OtpReturnDTO> {
     const secret = speakeasy.generateSecret({ length: this.otpLength });
 
     const base32Secret = secret.base32;
@@ -24,11 +24,12 @@ export class OtpService {
     const createdAt = Date.now();
     const newOtp = new this.otpModel({
       userId: data.userId,
-      otp,
+      otp: base32Secret,
       createdAt,
       expiresAt,
       used: false,
     });
-    return await newOtp.save();
+    await newOtp.save()
+    return { userId: data.userId, otp}
   }
 }
