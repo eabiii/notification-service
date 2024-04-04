@@ -30,6 +30,6 @@ export class OtpService {
       used: false,
     });
     await newOtp.save();
-    return { userId: data.userId, otp };
+    return otp;
   }
 }
