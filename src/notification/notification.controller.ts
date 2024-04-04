@@ -76,10 +76,21 @@ export class NotificationController {
   async sendOtp(@Body() body: OtpDTO, @Res() res): Promise<any> {
     const result = await this.otpService.create(body);
     if (result) {
-      return res.status(HttpStatus.CREATED).json({
-        statusCode: HttpStatus.CREATED,
-        message: `OTP sent successfully - ${result.otp}`,
-      });
+      if (body.channel === 'email') {
+        const sendEmailData: EmailData = {
+          email: body.userId,
+          subject: 'OTP',
+          text: `Your OTP is ${result.otp}`,
+          html: '',
+        };
+        const response = await this.mailersendService.sendEmail(sendEmailData);
+        if (response) {
+          return res.status(HttpStatus.CREATED).json({
+            statusCode: HttpStatus.CREATED,
+            message: `OTP sent successfully - ${result.otp}`,
+          });
+        }
+      }
     }
   }
 }

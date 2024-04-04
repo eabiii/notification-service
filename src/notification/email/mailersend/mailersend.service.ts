@@ -3,12 +3,7 @@ import { MailerSend, EmailParams, Sender, Recipient } from 'mailersend';
 import { Config } from '../../../config';
 
 export interface EmailData {
-  from: {
-    email: string;
-  };
-  to: {
-    email: string;
-  }[];
+  email: string;
   subject: string;
   text: string;
   html: string;
@@ -24,8 +19,9 @@ export class MailersendService {
     });
   }
   async sendEmail(data: EmailData): Promise<boolean> {
+    const recipients = [];
     const sentFrom = new Sender(Config.mailerEmailDomain);
-    const recipients = data.to.map((arr) => new Recipient(arr.email));
+    recipients.push(new Recipient(data.email));
     const emailParams = new EmailParams()
       .setFrom(sentFrom)
       .setTo(recipients)

@@ -15,4 +15,3 @@ export class OtpReturnDTO {
   @ApiProperty()
   otp: string;
 }
-
