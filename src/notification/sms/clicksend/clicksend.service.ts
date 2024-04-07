@@ -46,7 +46,6 @@ export class ClicksendService {
 
       return response.data;
     } catch (error) {
-      console.log('🚀 ~ ClicksendService ~ sendSMS ~ error:', error);
       return null;
     }
   }

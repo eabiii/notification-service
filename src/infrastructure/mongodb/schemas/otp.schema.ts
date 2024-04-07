@@ -10,6 +10,9 @@ export class Otp {
   @Prop({ required: true })
   otp: string; // The actual one-time password code
 
+  @Prop({ required: true })
+  secret: string; // Saved secret to use for verification in speakeasy
+
   @Prop({ required: true, default: Date.now })
   createdAt: number; // Timestamp of OTP generation
 

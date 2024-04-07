@@ -12,7 +12,7 @@ import {
   MailersendService,
 } from '../notification/email/mailersend/mailersend.service';
 import { OtpService } from './otp/otp.service';
-import { OtpDTO } from '../models/otp/otp.dto';
+import { OtpDTO, ValidateOtpDTO } from '../models/otp/otp.dto';
 import { SmsDTO } from '../models/sms/sms.dto';
 
 @Controller('/api/v1/notification')
@@ -98,7 +98,7 @@ export class NotificationController {
           if (response) {
             return res.status(HttpStatus.CREATED).json({
               statusCode: HttpStatus.CREATED,
-              message: `OTP sent successfully to ${body.userId} - ${generatedOtp}`,
+              message: `OTP sent successfully to ${body.userId}`,
             });
           }
         }
@@ -107,6 +107,17 @@ export class NotificationController {
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
         message: 'Internal server error',
+      });
+    }
+  }
+
+  @Post('validateOtp')
+  async validateOtp(@Body() body: ValidateOtpDTO, @Res() res): Promise<any> {
+    const isValid = await this.otpService.validate(body);
+    if (isValid) {
+      return res.status(HttpStatus.CREATED).json({
+        statusCode: HttpStatus.OK,
+        message: `OTP validated successfully`,
       });
     }
   }

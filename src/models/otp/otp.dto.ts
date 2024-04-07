@@ -12,3 +12,11 @@ export class OtpReturnDTO {
   @ApiProperty()
   otp: string;
 }
+
+export class ValidateOtpDTO {
+  @ApiProperty()
+  userId: string;
+
+  @ApiProperty()
+  otp: string;
+}
