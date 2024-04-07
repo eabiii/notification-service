@@ -29,7 +29,7 @@ export class OtpService {
       expiresAt,
       used: false,
     });
-    await newOtp.save()
-    return { userId: data.userId, otp}
+    await newOtp.save();
+    return otp;
   }
 }

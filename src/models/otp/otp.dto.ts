@@ -10,9 +10,5 @@ export class OtpDTO {
 
 export class OtpReturnDTO {
   @ApiProperty()
-  userId: string;
-
-  @ApiProperty()
   otp: string;
 }
-
