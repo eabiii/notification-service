@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  notification-service:
+    build: . 
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    depends_on:
+      - mongo
+    environment:
+      NODE_ENV: development
+      MONGO_URL: mongodb://mongo:27017
+      MONGO_DB_NAME: notification-service-dev
+      CLICKSEND_URL: https://rest.clicksend.com/v3/sms/send
+      # CLICKSEND_AUTH:
+      # MAILERSEND_SENDER_DOMAIN:
+      # MAILERSEND_API_KEY:
+  mongo:
+    image: mongo:latest  
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - db-data:/data/db
+
+volumes:
+  db-data:
